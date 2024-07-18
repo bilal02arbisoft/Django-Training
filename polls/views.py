@@ -3,7 +3,6 @@ from django.http import HttpRequest, HttpResponse
 from .models import Question
 
 
-
 def index(request: HttpRequest):
 
     latest_question_list = Question.objects.order_by("-pub_date")[:5]
