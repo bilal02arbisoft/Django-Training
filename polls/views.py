@@ -5,7 +5,7 @@ from django.views import generic
 from .models import Question, Choice
 from django.urls import reverse
 from .forms import ContactForm
-from django.core.mail import send_mail
+from django.views import View
 
 
 class IndexView(generic.ListView):
@@ -27,6 +27,36 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+
+class ContactView(View):
+
+    template_name = 'polls/contact.html'
+    form_class = ContactForm
+
+    def get(self, request, *args, **kwargs):
+
+        form = self.form_class()
+
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST)
+        if form.is_valid():
+
+            subject = form.cleaned_data["subject"]
+            message = form.cleaned_data["message"]
+            sender = form.cleaned_data["sender"]
+            cc_myself = form.cleaned_data["cc_myself"]
+
+            recipients = []
+            if cc_myself:
+                recipients.append(sender)
+
+            return HttpResponseRedirect(reverse('polls:thanks'))
+
+        return render(request, self.template_name, {'form': form})
 
 
 def contact_view(request):

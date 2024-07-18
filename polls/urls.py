@@ -8,6 +8,6 @@ urlpatterns = [
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
     path('<int:question_id>/vote/', views.vote, name='vote'),
     path('thanks/', views.thanks, name='thanks'),
-    path('contactus/', views.contact_view, name='contactus')
+    path('contactus/', views.ContactView.as_view(), name='contactus')
 
 ]
