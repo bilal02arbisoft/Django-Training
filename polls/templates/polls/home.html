@@ -1,0 +1,17 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Polls App</h1>
+    <p>To use the app you need to first login</p>
+
+
+ <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <button type="submit">Log In</button>
+</form>
+</body>
+</html>

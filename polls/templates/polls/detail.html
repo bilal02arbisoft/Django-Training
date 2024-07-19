@@ -30,6 +30,12 @@
        {% endfor %}
    </fieldset>
     <input type="submit" value="Vote">
+
+</form>
+
+ <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Log out</button>
 </form>
 
 </body>
