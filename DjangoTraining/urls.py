@@ -17,7 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
+from django.conf.urls import handler404
 from polls import views
+
+
+handler404 = 'polls.views.custom_404'
 
 urlpatterns = [
     path('', views.home, name='home'),

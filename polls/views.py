@@ -6,9 +6,13 @@ from .models import Question, Choice
 from django.urls import reverse
 from .forms import ContactForm
 from django.views import View
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+def custom_404(request, exception):
+
+    return render(request, 'polls/404.html', status=404)
 
 
 def home(request):
