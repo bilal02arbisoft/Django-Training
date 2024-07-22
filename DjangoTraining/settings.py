@@ -9,13 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import middleware.google_login_middle
 from pathlib import Path
 import os
-
-import polls.apps
-import users.apps
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,12 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3&tzs1m_@3fyr@d%j60g=$9%p7n7$_13ns5jxcm!l5so=qpzp$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 LOGIN_URL = '/login/'
-AUTH_USER_MODEL = 'users.CustomUser'
-# Application definition
+AUTH_USER_MODEL = 'auth.User'
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/polls/'
+
+AUTHENTICATION_BACKENDS = (
+   'social_core.backends.google.GoogleOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
+)
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
@@ -43,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.google_login_middle.SocialAuthMiddleware',
 ]
 
 ROOT_URLCONF = 'DjangoTraining.urls'
