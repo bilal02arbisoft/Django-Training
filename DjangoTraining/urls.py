@@ -26,8 +26,9 @@ handler404 = 'polls.views.custom_404'
 urlpatterns = [
     path('', views.home, name='home'),
     path('polls/', include('polls.urls')),
-    path('login/', auth_views.LoginView.as_view(next_page='/polls'), name='login'),
+    path('login/', views.login_view, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
+    path('social-auth/', include('social_django.urls', namespace='social')),
 
 ]
